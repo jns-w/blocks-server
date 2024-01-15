@@ -2,8 +2,8 @@ const router = require('express').Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const User = require('../models/blocksuser.model')
-const {AESdecrypt, verifyUser} = require("../../lib/utils");
-const {UnauthorizedError, BadRequestError} = require("../../lib/errors");
+const {AESdecrypt, verifyUser} = require("../lib/utils");
+const {UnauthorizedError, BadRequestError} = require("../lib/errors");
 
 
 /**

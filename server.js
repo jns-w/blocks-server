@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
 require('dotenv').config()
-require('./blocks/connection/blocks')
+require('./connection/blocks')
 const cors = require('cors')
 const {setIO, setIOConnections} = require("./lib/connection/socket");
 const { rateLimit } = require('express-rate-limit')
@@ -36,10 +36,10 @@ app.options('*', cors(corsOptions))
 app.use(express.json())
 
 // BLOCKS APP ROUTES
-app.use('/api/blocks/auth', require('./blocks/routes/auth.routes'))
-app.use('/api/blocks/app', require('./blocks/routes/app.routes'))
-app.use('/api/blocks/projects', require('./blocks/routes/projects.routes'))
-app.use('/api/blocks/history', require('./blocks/routes/history.routes'))
+app.use('/api/blocks/auth', require('./routes/auth.routes'))
+app.use('/api/blocks/app', require('./routes/app.routes'))
+app.use('/api/blocks/projects', require('./routes/projects.routes'))
+app.use('/api/blocks/history', require('./routes/history.routes'))
 
 app.use(HttpErrorHandler)
 

@@ -2,8 +2,8 @@ const router = require('express').Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const User = require('../models/blocksuser.model')
-const {verifyUser, AESdecrypt} = require("../../lib/utils");
-const {UnauthorizedError, BadRequestError} = require("../../lib/errors");
+const {verifyUser, AESdecrypt} = require("../lib/utils");
+const {UnauthorizedError, BadRequestError} = require("../lib/errors");
 
 const app = process.env.BLOCKSPREFIX
 
