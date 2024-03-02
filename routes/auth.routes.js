@@ -5,6 +5,11 @@ const User = require('../models/blocksuser.model')
 const {AESdecrypt, verifyUser} = require("../lib/utils");
 const {UnauthorizedError, BadRequestError} = require("../lib/errors");
 
+const corsOptions = {
+    origin: ['http://localhost:3000', 'https://blocks.wldspace.com'],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    optionsSuccessStatus: 200
+}
 
 /**
  * @METHOD GET
@@ -12,7 +17,7 @@ const {UnauthorizedError, BadRequestError} = require("../lib/errors");
  * @URL /api/blocks/auth
  */
 
-router.get('/', cors(), async (req, res, next) => {
+router.get('/', cors(corsOptions), async (req, res, next) => {
     try {
         console.log('here')
         return res.status(200).json({success: true, msg: "This is blocks auth"})
@@ -27,7 +32,7 @@ router.get('/', cors(), async (req, res, next) => {
  * @URL /api/blocks/auth/checkuser
  */
 
-router.get('/checkuser', cors(), async (req, res, next) => {
+router.get('/checkuser', cors(corsOptions), async (req, res, next) => {
     try {
         let {token} = req.headers
         const decoded = await jwt.verify(token, process.env.SECRET)
@@ -50,7 +55,7 @@ router.get('/checkuser', cors(), async (req, res, next) => {
  * @URL /api/blocks/auth/nameavail
  */
 
-router.get('/nameavail', cors(), async (req, res, next) => {
+router.get('/nameavail', cors(corsOptions), async (req, res, next) => {
     try {
         const {username} = req.headers
         const check = await User.exists({username: username})
@@ -68,7 +73,7 @@ router.get('/nameavail', cors(), async (req, res, next) => {
  * @URL /api/blocks/auth/signup
  */
 
-router.put('/signup', async (req, res, next) => {
+router.put('/signup', cors(corsOptions), async (req, res, next) => {
     try {
         const {payload} = req.body
         const {username, email, password} = AESdecrypt(payload)
@@ -96,7 +101,7 @@ router.put('/signup', async (req, res, next) => {
  * @URL /api/blocks/auth/signin
  */
 
-router.post('/signin', cors(), async (req, res, next) => {
+router.post('/signin', cors(corsOptions), async (req, res, next) => {
     try {
         const {ciphertext} = req.body
         const {email, password} = AESdecrypt(ciphertext)
